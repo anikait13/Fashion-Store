@@ -6,7 +6,7 @@ const { verifyToken } = require('../middlewares/verifyAuth')
 const Cart = require("../models/Cart.model")
 const Product = require("../models/Product.model")
 
-router.get("/payment", verifyToken, async (req, res) => {
+router.get("/payment", async (req, res) => {
   const cart = await Cart.findOne({ userID: ObjectId(req.user.uid) })
 
   if (!cart || (cart.products.length <= 0)) {

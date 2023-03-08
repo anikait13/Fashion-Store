@@ -5,6 +5,7 @@ const cors = require('cors')
 
 dotenv.config()
 
+//routing 
 const authRouter = require('./routes/auth')
 const userRouter = require('./routes/user')
 const productRouter = require('./routes/product')
@@ -21,11 +22,7 @@ const app = express()
 
 
 // mongodb
-
-
-
-// const uri =
-mongoose.connect("uri", {
+mongoose.connect(process.env.DB_URI, {
   useUnifiedTopology: true,
   useNewUrlParser: true,
 }).then(() => console.log("Connected to database"))

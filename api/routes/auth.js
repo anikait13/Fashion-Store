@@ -13,6 +13,7 @@ router.post("/register",
 
 	try {
 		const passwordHash = await bcrypt.hash(password, 10)
+
 		await User.create({ 
 			fullname, 
 			email, 
@@ -47,6 +48,8 @@ router.post("/login",
 			{expiresIn: "3d"},
 		)
 
+
+		
 		return res.json({ 
 			...authResponse.loginSuccess,
 			accessToken: jwtToken,
