@@ -25,7 +25,7 @@ const app = express()
 
 
 // const uri =
-mongoose.connect("mongodb+srv://jimmy:12345@fashion-store.owdjfki.mongodb.net/?retryWrites=true&w=majority", {
+mongoose.connect("uri", {
   useUnifiedTopology: true,
   useNewUrlParser: true,
 }).then(() => console.log("Connected to database"))
