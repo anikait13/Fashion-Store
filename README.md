@@ -1,10 +1,5 @@
 
 
-# Fashion-Store
-
-https://user-images.githubusercontent.com/30614282/161916675-86fb41ce-75cf-40f2-8c6e-db35ac1f059e.mp4
-
----
 ## Front-end
 - [React](https://es.reactjs.org/) - Front-End JavaScript library
 - [Windi CSS](https://windicss.org/) - Next generation utility-first CSS framework
@@ -28,16 +23,12 @@ https://user-images.githubusercontent.com/30614282/161916675-86fb41ce-75cf-40f2-
 
 1. Clone this repo
 ```bash
-git clone https://github.com/nimone/Fashion-Store && cd Fashion-Store
+git clone https://github.com/anikait13/Fashion-Store && cd Fashion-Store
 ```
 2. Install project dependecies
 ```bash
 cd ./api && npm install
 cd ./client && npm install
 ```
-3. Start development servers (api & client) with the provided script `rundev.sh`
-```bash
-bash rundev.sh
-```
-> Or, start them manually by `npm run dev`
+3. Start development servers (api & client) with the   by `npm run dev`
 # Fashion-Store
