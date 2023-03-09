@@ -36,7 +36,6 @@ router.get("/",
 
 // Create a new order - authenticated user
 router.post("/", 
-	verifyToken, 
 	celebrate({ body: orderSchema.new }),
 	async (req, res) => {
 	const { products, amount, address } = req.body
