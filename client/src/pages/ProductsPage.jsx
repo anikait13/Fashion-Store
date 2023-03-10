@@ -1,70 +1,91 @@
-import React, { useContext, useEffect, useState } from "react"
-import { ChevronDown } from "react-feather"
-import { useLocation } from "react-router-dom"
+import React, { useContext, useEffect, useState } from "react";
+import { ChevronDown } from "react-feather";
+import { useLocation, useSearchParams } from "react-router-dom";
 
-import ProductList from "@/ui/ProductList"
-import Container from "@/components/Container"
-import Button from "@/components/Button"
-import DropDown, { Select, Option } from "@/components/DropDown"
-import useClickOutside from "@/hooks/useClickOutside" 
-import api from "../api"
-import { CartContext, UserContext } from "@/App"
+import ProductList from "@/ui/ProductList";
+import Container from "@/components/Container";
+import Button from "@/components/Button";
+import DropDown, { Select, Option } from "@/components/DropDown";
+import useClickOutside from "@/hooks/useClickOutside";
+import api from "../api";
+import { CartContext, UserContext } from "@/App";
 
 const sortOptions = [
   "popular",
   "new",
   "price: low to high",
   "price: high to low",
-]
+];
 
 export default function ProductsPage() {
-  const {cartDispatch} = useContext(CartContext)
-  const {user} = useContext(UserContext)
-  const query = new URLSearchParams(useLocation().search)
-  const [products, setProducts] = useState([])
-  const [sort, setSort] = useState(0)
-  const [showSortOptions, setShowSortOptions] = useState(false)
-  const dropDownRef = useClickOutside(() => setShowSortOptions(false))
+  const { cartDispatch } = useContext(CartContext);
+  const { user } = useContext(UserContext);
+  const query = new URLSearchParams(useLocation().search);
+  const [products, setProducts] = useState([]);
+  const [sort, setSort] = useState(0);
+  const [showSortOptions, setShowSortOptions] = useState(false);
+  const dropDownRef = useClickOutside(() => setShowSortOptions(false));
 
-  const category = query.get("category")
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const category = query.get("category");
 
   useEffect(() => {
-    (async () => {
-      const resp = await api.fetchAllProducts()
-      if (resp.status != "error") {
-        console.log(resp);
-        setProducts(resp);
-      }
-    })()
-  }, [])
+    console.log(
+      `http://localhost:5002/products?category=${searchParams.get("category")}`
+    );
+    // const resp = await api.fetchProducts(searhParams.get("category"));
+    fetch(
+      `http://localhost:5002/products?category=${searchParams.get("category")}`
+    )
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+        setProducts(res);
+      })
+      .catch((err) => console.log(err));
+    // console.log(resp)
+    // if (resp.status != "error") {
+    //   console.log(resp);
+    //   setProducts(resp);
+    // }
+  }, [searchParams]);
 
-  useEffect(() => sortProducts(sort), [sort])
+  useEffect(() => sortProducts(sort), [sort]);
 
   const sortProducts = (sortType) => {
     switch (sortType) {
       case 1:
-        setProducts([...products].sort((a, b) => a.updatedAt - b.updatedAt))
-      case 2: 
-        setProducts([...products].sort((a, b) => a.price - b.price))
-        break
+        setProducts([...products].sort((a, b) => a.updatedAt - b.updatedAt));
+      case 2:
+        setProducts([...products].sort((a, b) => a.price - b.price));
+        break;
       case 3:
-        setProducts([...products].sort((a, b) => b.price - a.price))
-        break
+        setProducts([...products].sort((a, b) => b.price - a.price));
+        break;
       default:
-        return
+        return;
     }
-  }
+  };
 
-  const addToCart = async (product, quantity=1) => {
+  const addToCart = async (product, quantity = 1) => {
     if (user) {
-      const resp = await api.addProductsToCart([{productID: product._id, quantity}])
+      const resp = await api.addProductsToCart([
+        { productID: product._id, quantity },
+      ]);
       if (resp.status === "ok") {
-        cartDispatch({type: "ADD_PRODUCTS", payload: [{...product, quantity}]})
+        cartDispatch({
+          type: "ADD_PRODUCTS",
+          payload: [{ ...product, quantity }],
+        });
       }
     } else {
-      cartDispatch({type: "ADD_PRODUCTS", payload: [{...product, quantity}]})
+      cartDispatch({
+        type: "ADD_PRODUCTS",
+        payload: [{ ...product, quantity }],
+      });
     }
-  }
+  };
 
   return (
     <main>
@@ -83,7 +104,10 @@ export default function ProductsPage() {
             </Button>
 
             {showSortOptions && (
-              <DropDown className="mt-10 inset-x-0" onClick={() => setShowSortOptions(false)}>
+              <DropDown
+                className="mt-10 inset-x-0"
+                onClick={() => setShowSortOptions(false)}
+              >
                 <Select>
                   {sortOptions.map((option, i) => (
                     <Option key={option} onClick={() => setSort(i)}>
@@ -98,5 +122,5 @@ export default function ProductsPage() {
         <ProductList products={products} onAddToCart={addToCart} />
       </Container>
     </main>
-  )
+  );
 }
