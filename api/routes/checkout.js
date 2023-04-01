@@ -7,7 +7,7 @@ const Cart = require("../models/Cart.model")
 const Product = require("../models/Product.model")
 
 router.get("/payment", async (req, res) => {
-  const cart = await Cart.findOne({ userID: ObjectId(req.user.uid) })
+  const cart = await Cart.findOne({ userID: ObjectId(req.userID) })
 
   if (!cart || (cart.products.length <= 0)) {
   	return res.status(400).json(checkoutResponse.cartIsEmpty)

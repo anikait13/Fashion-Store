@@ -35,6 +35,17 @@ export default function ProductsPage() {
       `http://localhost:5002/products?category=${searchParams.get("category")}`
     );
     // const resp = await api.fetchProducts(searhParams.get("category"));
+
+    if (searchParams.get("category") === null) {
+      fetch(`http://localhost:5002/products`)
+        .then((res) => res.json())
+        .then((res) => {
+          console.log(res);
+          setProducts(res);
+        })
+        .catch((err) => console.log(err));
+    } else {
+
     fetch(
       `http://localhost:5002/products?category=${searchParams.get("category")}`
     )
@@ -44,6 +55,7 @@ export default function ProductsPage() {
         setProducts(res);
       })
       .catch((err) => console.log(err));
+    }
     // console.log(resp)
     // if (resp.status != "error") {
     //   console.log(resp);

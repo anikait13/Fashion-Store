@@ -12,6 +12,7 @@ const {
 
 // Get all products - any user
 router.get("/", 
+
 	celebrate({ query: productSchema.query }),
 	async (req, res) => {
 	const query = req.query

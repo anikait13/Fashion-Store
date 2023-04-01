@@ -39,13 +39,14 @@ export default function App() {
     (async () => {
       const resp = await api.getUserCart()
       console.log(resp)
-      if (resp.products) {
+      if (resp?.products) {
         cartDispatch({type: "SET_PRODUCTS", payload: resp.products})
       }
     })()
   }, [user])
 
   return (
+    
     <BrowserRouter>      
       <CartContext.Provider value={{cart, cartDispatch}}>
       <UserContext.Provider value={{user, setUser}}>

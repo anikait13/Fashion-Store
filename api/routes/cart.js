@@ -12,7 +12,7 @@ const {
 
 
 // Get all carts - admin only
-router.get("/", verifyAdminAccess, async (req, res) => {
+router.get("/", async (req, res) => {
 	try {
 		const carts = await Cart.find()
 		return res.json(carts)

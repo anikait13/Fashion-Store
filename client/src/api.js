@@ -67,7 +67,7 @@ async function getUserCart() {
     }
   })
   const cart = await resp.json()
-  if (cart.products) {
+  if (cart?.products) {
     cart.products = cart.products.map(product => (
       {
         id: product.productID._id,

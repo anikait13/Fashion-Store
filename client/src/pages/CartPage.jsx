@@ -62,6 +62,9 @@ export default function CartPage() {
 				<section className="w-full md:w-auto border border-gray-300 rounded shadow py-4 md:(sticky top-20)">
 					<CartSummary 
 						onCheckout={() => setShowCheckoutModal(true)}
+						// onCheckout= {() => {
+						// 	console.log(cart.products)
+						// }}
 						subtotal={cart.total} 
 						charges={[
 							{name: "Shipping Charges", amount: 9},

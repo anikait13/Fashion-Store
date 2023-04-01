@@ -1,0 +1,7 @@
+{
+    "name": "Fashion-Store",
+    "integrations": {
+      "capacitor": {}
+    },
+    "type": "react"
+  }
